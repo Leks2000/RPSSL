@@ -35,7 +35,8 @@ class MainActivity : AppCompatActivity() {
             true -> infofortext.text = "Пожалуйста выбирите 1 из 5 вариантов"
             else -> {
                 check()
-                infofortext.text = "Вы выбрали $playerchoise бот выбрал ${bot}"
+                val list = arrayOf("Камень","Бумагу","Спок","Ножницы","Ящерицу")
+                infofortext.text = "Вы выбрали ${list[playerchoise - 1]} бот выбрал ${list[bot - 1]}"
                 when(playerchoise) {
                     1 -> imgplajer.setImageResource(R.drawable.rock)
                     2 -> imgplajer.setImageResource(R.drawable.paper)
