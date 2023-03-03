@@ -13,26 +13,26 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        resulttext = findViewById(R.id.TextForExample)
+
+        startbtn = findViewById(R.id.Start)
+        imgbot = findViewById(R.id.imgfrombot)
         infofortext = findViewById(R.id.txtforres)
         imgplajer = findViewById(R.id.imgfromplajer)
-        imgbot = findViewById(R.id.imgfrombot)
-        startbtn = findViewById(R.id.Start)
+        resulttext = findViewById(R.id.TextForExample)
     }
-    private lateinit var resulttext: TextView
-    private lateinit var imgplajer: ImageView
-    private lateinit var imgbot: ImageView
-    private lateinit var infofortext: TextView
     private lateinit var startbtn: Button
+    private lateinit var imgbot: ImageView
+    private lateinit var imgplajer: ImageView
+    private lateinit var resulttext: TextView
+    private lateinit var infofortext: TextView
+
     var bot = 0
     var playerchoise: Int = 0
-
-
 
     @SuppressLint("ResourceType")
     fun startBtn(view: View) {
         when(playerchoise == 0){
-            true -> infofortext.text = "Пожалуйста выбирите 1 из 5 вариантов"
+            true -> infofortext.text = "Сделайте свой выбор"
             else -> {
                 check()
                 val list = arrayOf("Камень","Бумагу","Спок","Ножницы","Ящерицу")
@@ -79,78 +79,38 @@ class MainActivity : AppCompatActivity() {
     private fun check(): Any {
         bot = (1..5).random()
         when (playerchoise) {
-            1 -> when (bot) {
-                2 -> {
-                    return "Вы Проиграли".also { resulttext.text = it }
-                }
-                3 -> {
-                    return "Вы Проиграли".also { resulttext.text = it }
-                }
-                4 -> {
-                    return "Вы Победили".also { resulttext.text = it }
-                }
-                5 -> {
-                    return "Вы Победили".also { resulttext.text = it }
-                }
+            1 -> when (bot)
+            {
+                2,3 -> return lose()
+                4,5 -> return win()
             }
-            2 -> when (bot) {
-                1 -> {
-                    return "Вы Победили".also { resulttext.text = it }
-                }
-                3 -> {
-                    return "Вы Победили".also { resulttext.text = it }
-                }
-                4 -> {
-                    return "Вы Проиграли".also { resulttext.text = it }
-                }
-                5 -> {
-                    return "Вы Проиграли".also { resulttext.text = it }
-                }
+            2 -> when (bot)
+            {
+                1,3 -> return win()
+                4,5 -> return lose()
             }
-            3 -> when (bot) {
-                1 -> {
-                    return "Вы Победили".also { resulttext.text = it }
-                }
-                2 -> {
-                    return "Вы Проиграли".also { resulttext.text = it }
-                }
-                4 -> {
-                    return "Вы Победили".also { resulttext.text = it }
-                }
-                5 -> {
-                    return "Вы Проиграли".also { resulttext.text = it }
-                }
+            3 -> when (bot)
+            {
+                1,4 -> return win()
+                2,5 -> return lose()
             }
-            4 -> when (bot) {
-                1 -> {
-                    return "Вы Проиграли".also { resulttext.text = it }
-                }
-                2 -> {
-                    return "Вы Победили".also { resulttext.text = it }
-                }
-                3 -> {
-                    return "Вы Проиграли".also { resulttext.text = it }
-                }
-                5 -> {
-                    return "Вы Победили".also { resulttext.text = it }
-                }
+            4 -> when (bot)
+            {
+                1,3 -> return lose()
+                2,5 -> return win()
             }
-            5 -> when (bot) {
-                1 -> {
-                    return "Вы Проиграли".also { resulttext.text = it }
-                }
-                2 -> {
-                    return "Вы Победили".also { resulttext.text = it }
-                }
-                3 -> {
-                    return "Вы Победили".also { resulttext.text = it }
-                }
-                4 -> {
-                    return "Вы Проиграли".also { resulttext.text = it }
-                }
+            5 -> when (bot)
+            {
+                1,4 -> return lose()
+                2,3 -> return win()
             }
         }
         return ("Ничья".also { this.resulttext.text = it })
-
+    }
+    private fun win(){
+        "Вы Проиграли".also { resulttext.text = it }
+    }
+    private fun lose(){
+        "Вы Победили".also { resulttext.text = it }
     }
 }
