@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -25,12 +26,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var imgplajer: ImageView
     private lateinit var resulttext: TextView
     private lateinit var infofortext: TextView
-
-    var bot = 0
+    var win = 0
+    var lose = 0
+    var draw = 0
+    var count = 0
+    private var bot = 0
     var playerchoise: Int = 0
+
 
     @SuppressLint("ResourceType")
     fun startBtn(view: View) {
+        if(count == 0){
+            timerStart()
+        }
         when(playerchoise == 0){
             true -> infofortext.text = "Сделайте свой выбор"
             else -> {
@@ -105,12 +113,36 @@ class MainActivity : AppCompatActivity() {
                 2,3 -> return win()
             }
         }
-        return ("Ничья".also { this.resulttext.text = it })
+        return ("Ничья".also {
+            draw++
+            this.resulttext.text = it
+        })
     }
     private fun win(){
+        win++
         "Вы Проиграли".also { resulttext.text = it }
     }
     private fun lose(){
+        lose++
         "Вы Победили".also { resulttext.text = it }
+    }
+    private val timer = object: CountDownTimer(50000, 1000) {
+        override fun onTick(millisUntilFinished: Long) {
+        count++
+        }
+        override fun onFinish() {
+        }
+    }
+    private fun timerStart(){
+        timer.start()
+    }
+    fun timerStop(view: View){
+        timer.cancel()
+        infofortext.text = "Ничья:${draw} Победы:${win} Поражения:${lose}"
+        resulttext.text = "Время игры:${count}"
+        count = 0
+        lose = 0
+        win = 0
+        draw = 0
     }
 }
